@@ -86,8 +86,8 @@ var notesData10EN = {
     title: "Lesson 2: [Your Title Here]",
     intro: "This is an example for Unit 2. Replace this text with your content.<br><br><img src='images/contents/ss.png' style='max-width:300px; border-radius:12px; margin: 10px 0;'>",
     summary: [
-      "Point 1: Add your key points here.",
-      "Point 2: The structure is identical to Unit 1."
+      "Simple Point: This is how a normal summary point looks.",
+      "Complex Point Example: This is how you can write a point that has multiple numbered lists and sub-lists inside it: <indent> 1. First main point <br> 2. Second main point <br> 3. Third main point is divided into three parts: <indent> i. Part one <br> ii. Part two <br> iii. Part three </indent> </indent>"
     ],
     mcqs: [
       { q: "Sample Question?", options: ["Opt 1", "Opt 2", "Opt 3", "Opt 4"], a: 0, hint: "Sample hint." }
