@@ -19,6 +19,8 @@ var notesData10NP = {
       { q: "सन्चो न्युक्लियस (Definite Nucleus) नभएका सजीवहरू कुन जगत्मा पर्छन्?", options: ["मोनेरा", "प्रोटिस्टा", "फन्जाई", "प्लान्टी"], a: 0, hint: "मोनेरा जगत्का सजीवहरू प्रोक्यारियोटिक हुन्छन्।" },
       { q: "'Binomial Nomenclature' मा पहिलो शब्दले केलाई बुझाउँछ?", options: ["Species", "Family", "Order", "Genus"], a: 3, hint: "पहिलो शब्द Genus र दोस्रो Species हुन्छ।" },
       { q: "मकैको वैज्ञानिक नाम के हो?", options: ["Oryza sativa", "Zea mays", "Pisum sativum", "Triticum aestivum"], a: 1, hint: "Zea mays मकैको वैज्ञानिक नाम हो।" }
+      { q: "'Binomial Nomenclature' मा पहिलो शबghhhfhhfhhfउँछ?", options: ["Species", "Family", "Order", "Genus"], a: 1, hint: "पहिलो शब्द Genus र दोस्रो Species हुन्छ।" },
+    
     ],
     vshort: [
       { q: "वर्गीकरण भनेको के हो?", a: "सजीवहरूलाई तिनीहरूको समानता र असमानताका आधारमा समूह र उपसमूहमा बाँड्ने प्रक्रिया वर्गीकरण हो।" },
