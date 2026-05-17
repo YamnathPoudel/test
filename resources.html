@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Digital Resource Library - Yamnath Poudel. Educational materials, manuals, and books for Science and Technology." />
+  <title>Resources — Yamnath Poudel</title>
+  <link rel="icon" type="image/svg+xml" href="images/logo.svg" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@100..900&family=Mukta:wght@400;600;700;800&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #030712;
+      --navy: #0d1b3e;
+      --navy2: #122050;
+      --gold: #d4af37;
+      --gold2: #f4d03f;
+      --cream: #f7f2ea;
+      --cream2: #efe8d8;
+      --slate: #4a5568;
+      --mist: #8896a5;
+      --ease: cubic-bezier(.22, 1, .36, 1);
+      --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+      --glass: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --text-dim: rgba(255, 255, 255, 0.5);
+      --font-serif: 'Cormorant Garamond', serif;
+      --font-heading: 'Mukta', sans-serif;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 110%;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--ink);
+      color: #fff;
+      overflow-x: hidden;
+      min-height: 100vh;
+      font-size: 110%;
+    }
+
+    /* ══ NAV (Unified) ══ */
+    #nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 0 clamp(1rem, 3vw, 3rem);
+      transition: background .3s, border-color .3s;
+      background: #000;
+    }
+
+    #nav.scrolled {
+      background: rgba(10, 15, 30, .97);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(200, 168, 75, .18);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gold2);
+      white-space: nowrap;
+      flex-shrink: 0;
+      text-decoration: none;
+    }
+
+    .nav-logo img {
+      height: 28px;
+      width: auto;
+      border-radius: 3.5px;
+      object-fit: contain;
+      border: 1.2px solid rgba(200, 168, 75, .3);
+    }
+
+    .nav-logo em {
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(255, 255, 255, .6);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      gap: clamp(.5rem, 1.3vw, 1.4rem);
+      flex: 1;
+      justify-content: center;
+    }
+
+    .nav-links a {
+      color: rgba(255, 255, 255, .58);
+      font-size: .75rem;
+      font-weight: 500;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      position: relative;
+      transition: color .2s;
+      text-decoration: none;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      transition: width .25s var(--ease);
+    }
+
+    .nav-links a:hover {
+      color: var(--gold);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      flex-shrink: 0;
+      display: inline-block;
+      background: transparent;
+      border: 1px solid rgba(200, 168, 75, .45);
+      color: var(--gold);
+      padding: 6px 16px;
+      border-radius: 3px;
+      font-size: .73rem;
+      font-weight: 600;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: all .2s;
+      text-decoration: none;
+    }
+
+    .nav-cta:hover {
+      background: var(--gold);
+      color: var(--ink);
+    }
+
+    /* hamburger */
+    .hbtn {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 5px;
+      background: none;
+      border: none;
+      flex-shrink: 0;
+    }
+
+    .hbtn span {
+      width: 22px;
+      height: 1.5px;
+      background: rgba(255, 255, 255, .8);
+      display: block;
+      transition: all .28s;
+    }
+
+    .hbtn.open span:nth-child(1) {
+      transform: rotate(45deg) translate(4px, 5px);
+    }
+
+    .hbtn.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hbtn.open span:nth-child(3) {
+      transform: rotate(-45deg) translate(4px, -5px);
+    }
+
+    /* mobile menu */
+    #mob {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 15, 30, 0.98);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.8rem;
+      transform: translateX(100%);
+      transition: transform .4s var(--ease);
+    }
+
+    #mob::before {
+      content: '';
+      position: absolute;
+      top: -10%;
+      right: -10%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(200, 168, 75, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    #mob.open {
+      transform: translateX(0);
+    }
+
+    #mob a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: rgba(255, 255, 255, .7);
+      transition: all .3s;
+      text-decoration: none;
+    }
+
+    #mob a:hover {
+      color: var(--gold);
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 900px) {
+
+      .nav-links,
+      .nav-cta {
+        display: none;
+      }
+
+      .hbtn {
+        display: flex;
+        margin-left: auto;
+      }
+    }
+
+    /* ══ HERO/CONTROLS ══ */
+    .controls-sec {
+      padding: 2.5rem clamp(1.2rem, 5vw, 5rem) 1.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .page-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 5.5vw, 4.2rem);
+      margin-bottom: 1.3rem;
+      background: linear-gradient(135deg, #fff, var(--gold2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .search-bar {
+      width: 100%;
+      max-width: 600px;
+      position: relative;
+      margin-bottom: 1.3rem;
+    }
+
+    .search-bar input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(200, 168, 75, 0.2);
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      color: #fff;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .search-bar input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 15px rgba(200, 168, 75, 0.15);
+    }
+
+    .filters {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    .filter-btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.5);
+      padding: 0.6rem 1.4rem;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .filter-btn:hover {
+      background: rgba(255, 255, 255, 0.07);
+      color: #fff;
+    }
+
+    .filter-btn.active {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .filter-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255, 255, 255, 0.3);
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    .filter-group {
+      margin-bottom: 2rem;
+    }
+
+    /* ══ GRID ══ */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 clamp(1.2rem, 5vw, 5rem) 5rem;
+    }
+
+    .file-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 16px;
+      padding: 1.5rem;
+      transition: all 0.3s var(--ease);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .file-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s var(--ease);
+    }
+
+    .file-card:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(200, 168, 75, 0.3);
+      transform: translateY(-5px);
+    }
+
+    .file-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .file-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(200, 168, 75, 0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .file-info h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #fff;
+      line-height: 1.4;
+    }
+
+    .file-class {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.2rem;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: rgba(200, 168, 75, 0.15);
+      border: 1px solid rgba(200, 168, 75, 0.2);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      color: var(--gold2);
+      font-weight: 700;
+      z-index: 5;
+    }
+
+    .file-info p {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.4);
+      line-height: 1.5;
+    }
+
+    .file-meta {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .file-type {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--gold2);
+      font-weight: 700;
+    }
+
+    .file-size {
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* ══ EMPTY STATE ══ */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 5rem 0;
+      color: rgba(255, 255, 255, 0.3);
+      display: none;
+    }
+
+    /* ══ FOOTER ══ */
+    /* ══ FOOTER ══ */
+    footer {
+      background: #050810;
+      padding: clamp(1.5rem, 3vw, 2.4rem) clamp(1.2rem, 5vw, 5rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.1rem;
+      border-top: 1px solid rgba(200, 168, 75, .1);
+    }
+
+    .fbrand {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: var(--gold2);
+      text-decoration: none;
+    }
+
+    .fbrand img {
+      height: 28px;
+      width: auto;
+      border-radius: 3.5px;
+      object-fit: contain;
+      border: 1px solid rgba(200, 168, 75, .25)
+    }
+
+    .fbrand small {
+      display: block;
+      font-family: 'Outfit', sans-serif;
+      font-size: .62rem;
+      color: rgba(255, 255, 255, .24);
+      font-weight: 400;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-top: .1rem
+    }
+
+    .fnav {
+      display: flex;
+      gap: 1.3rem;
+      flex-wrap: wrap
+    }
+
+    .fnav a {
+      font-size: .7rem;
+      color: rgba(255, 255, 255, .24);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      transition: color .18s;
+      text-decoration: none;
+    }
+
+    .fnav a:hover {
+      color: var(--gold)
+    }
+
+    .fcopy {
+      font-size: .66rem;
+      color: rgba(255, 255, 255, .17)
+    }
+
+    @media(max-width:500px) {
+      footer {
+        flex-direction: column;
+        align-items: flex-start
+      }
+
+      .fnav {
+        gap: .8rem
+      }
+    }
+
+    /* ══ RESPONSIVE ══ */
+    @media (max-width: 600px) {
+      .filters {
+        gap: 0.5rem;
+      }
+
+      .filter-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
+      }
+    }
+    /* ══ READER VIEW ══ */
+    #reader-view {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--ink);
+      z-index: 3000;
+      overflow-y: auto;
+      padding: 2rem clamp(1.5rem, 5vw, 5rem);
+      animation: slideUp 0.5s var(--ease-premium);
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--gold);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--glass-border);
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-bottom: 2rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .back-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--gold); }
+
+    /* ══ BENTO CARDS ══ */
+    .section-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .section-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+
+    .section-header .line {
+      height: 1px;
+      flex: 1;
+      background: linear-gradient(to right, var(--glass-border), transparent);
+    }
+
+    /* Unit Card styles */
+    .unit-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 2rem;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s var(--ease-premium);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .unit-card:hover {
+      background: rgba(255, 255, 255, 0.06);
+      transform: translateY(-8px);
+      border-color: var(--gold);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+    }
+
+    .unit-card .u-num {
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--gold);
+      opacity: 0.1;
+      position: absolute;
+      top: 5px;
+      right: 15px;
+    }
+    
+    .medium-toggle {
+      display: none;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 2rem;
+    }
+    /* ══ LEGACY READER STYLES ══ */
+    .hero-note { margin-bottom: 3rem; }
+    .intro-card {
+      background: rgba(255,255,255,0.02); padding: 2rem; border-radius: 20px;
+      border: 1px solid var(--glass-border); font-size: 1.05rem; color: #fff;
+      font-style: italic; position: relative; margin-top: 1rem;
+    }
+    .section-header { margin: 4rem 0 2rem; display: flex; align-items: baseline; gap: 15px; }
+    .section-header h2 { font-family: var(--font-serif); font-size: 2.2rem; color: var(--gold); }
+    .section-header .line { flex: 1; height: 1px; background: linear-gradient(90deg, var(--glass-border), transparent); }
+    
+    .mcq-container { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+    .mcq-card {
+      background: rgba(255,255,255,0.01); border: 1px solid var(--glass-border);
+      padding: 2rem; border-radius: 20px; position: relative; transition: 0.3s;
+    }
+    .mcq-num { position: absolute; top: 1rem; right: 1.5rem; font-size: 2.5rem; font-weight: 900; opacity: 0.05; color: var(--gold); }
+    .mcq-question { font-size: 1.15rem; font-weight: 600; margin-bottom: 1.5rem; display: block; color: #fff; }
+    .mcq-options { display: grid; gap: 0.7rem; }
+    .option-btn {
+      background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border);
+      padding: 1rem 1.2rem; border-radius: 12px; color: #fff; cursor: pointer;
+      text-align: left; font-size: 0.95rem; transition: 0.2s; display: flex; align-items: center;
+    }
+    .option-btn:hover { background: rgba(255, 255, 255, 0.07); }
+    .option-btn.correct { background: rgba(34, 197, 94, 0.1) !important; border-color: #22c55e !important; color: #4ade80 !important; }
+    .option-btn.wrong { background: rgba(239, 68, 68, 0.1) !important; border-color: #ef4444 !important; color: #f87171 !important; }
+
+    .qa-card {
+      background: rgba(255,255,255,0.01); border-left: 3px solid var(--gold);
+      padding: 1.5rem; border-radius: 0 15px 15px 0; margin-bottom: 1.2rem; border: 1px solid var(--glass-border);
+      border-left-width: 4px;
+    }
+    .qa-q { font-weight: 700; color: #fff; margin-bottom: 0.6rem; font-size: 1.1rem; }
+    .qa-a { color: rgba(255,255,255,0.7); line-height: 1.6; }
+    .qa-a.gold { color: var(--gold2); }
+
+    .diff-table-wrapper { background: rgba(255,255,255,0.01); border: 1px solid var(--glass-border); border-radius: 15px; overflow: hidden; margin-top: 1rem; }
+    .diff-table { width: 100%; border-collapse: collapse; }
+    .diff-table th { background: rgba(212, 175, 55, 0.08); color: var(--gold); padding: 1.2rem; text-align: left; font-size: 0.85rem; text-transform: uppercase; border: 1px solid var(--glass-border); }
+    .diff-table td { padding: 1.2rem; border: 1px solid var(--glass-border); font-size: 0.95rem; color: rgba(255,255,255,0.8); }
+
+    .practice-box {
+      background: linear-gradient(135deg, rgba(200, 168, 75, 0.05), transparent);
+      border: 1px dashed var(--gold); padding: 2rem; border-radius: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Mobile overlay -->
+  <div id="mob">
+    <a href="index.html#home" onclick="closeMob()">Home</a>
+    <a href="notes.html" onclick="closeMob()">Notes</a>
+    <a href="resources.html" onclick="closeMob()" style="color:var(--gold)">Resources</a>
+    <a href="links.html" onclick="closeMob()">Links</a>
+    <a href="tools.html" onclick="closeMob()">Tools</a>
+    <a href="labs.html" onclick="closeMob()">Virtual Labs</a>
+    <a href="contact.html" onclick="closeMob()">Contact</a>
+  </div>
+
+  <!-- ══ NAV ══ -->
+  <nav id="nav">
+    <a class="nav-logo" href="index.html#home">
+      <img src="images/logo.svg" alt="YNP Logo" loading="lazy" />
+      Yamnath Poudel<em></em>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#home">Home</a></li>
+      <li><a href="notes.html">Notes</a></li>
+      <li><a href="resources.html" style="color:var(--gold)">Resources</a></li>
+      <li><a href="links.html">Links</a></li>
+      <li><a href="tools.html">Tools</a></li>
+      <li><a href="labs.html">Virtual Labs</a></li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Contact</a>
+    <button class="hbtn" id="hbtn" onclick="toggleMob()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div style="height: 60px;"></div> <!-- Spacer for fixed nav -->
+  <main>
+    <section class="controls-sec">
+      <h1 class="page-title">Digital Library</h1>
+
+      <div class="search-bar">
+        <input type="text" id="searchInput"
+          placeholder="Search for practice question sets, solutions, textbooks, videos, notices, or teachers guide..."
+          onkeyup="filterItems()">
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">Class Level</span>
+        <div class="filters" id="classFilters">
+          <button class="filter-btn active" data-class="all" onclick="setClassFilter('all')">All Classes</button>
+          <button class="filter-btn" data-class="10" onclick="setClassFilter('10')">Class 10</button>
+          <button class="filter-btn" data-class="9" onclick="setClassFilter('9')">Class 9</button>
+          <button class="filter-btn" data-class="8" onclick="setClassFilter('8')">Class 8</button>
+          <button class="filter-btn" data-class="General" onclick="setClassFilter('General')">General</button>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">Resource Type</span>
+        <div class="filters" id="typeFilters">
+          <button class="filter-btn active" data-type="all" onclick="setTypeFilter('all')">All Resources</button>
+          <button class="filter-btn" data-type="practise_questions_sets"
+            onclick="setTypeFilter('practise_questions_sets')">Practice / Question Sets</button>
+          <button class="filter-btn" data-type="solutions" onclick="setTypeFilter('solutions')">Solutions</button>
+          <button class="filter-btn" data-type="teachers_guide" onclick="setTypeFilter('teachers_guide')">Teachers guide</button>
+          <button class="filter-btn" data-type="videos" onclick="setTypeFilter('videos')">Videos</button>
+          <button class="filter-btn" data-type="curriculum" onclick="setTypeFilter('curriculum')">Curriculum</button>
+          <button class="filter-btn" data-type="textbook" onclick="setTypeFilter('textbook')">Textbooks</button>
+          <button class="filter-btn" data-type="misc" onclick="setTypeFilter('misc')">Misc</button>
+          <button class="filter-btn" data-type="notice" onclick="setTypeFilter('notice')">Notices</button>
+        </div>
+
+      <div class="medium-toggle" id="mediumToggle">
+        <button class="filter-btn active" onclick="setMedium('np', this)">Nepali Medium</button>
+        <button class="filter-btn" onclick="setMedium('en', this)">English Medium</button>
+      </div>
+    </section>
+
+    <div class="resource-grid" id="resourceGrid">
+      <!-- Items will be injected by JavaScript -->
+      <div class="empty-state" id="emptyState">
+        No resources found matching your search or category.
+      </div>
+    </div>
+
+    <!-- READER VIEW -->
+    <div id="reader-view">
+      <div class="back-btn" onclick="closeReader()">
+        <span>←</span> Back to Resource Library
+      </div>
+      <div id="reader-content"></div>
+    </div>
+  </main>
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <a href="index.html#home" class="fbrand">
+      <img src="images/logo.svg" alt="YNP Logo" />
+      <div>Yamnath Poudel<small>Science Educator · Author · Nepal</small></div>
+    </a>
+    <nav class="fnav">
+      <a href="index.html#home">Home</a>
+      <a href="notes.html">Notes</a>
+      <a href="resources.html" style="color:var(--gold)">Resources</a>
+      <a href="links.html">Links</a>
+      <a href="tools.html">Tools</a>
+      <a href="labs.html">Virtual Labs</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="fcopy">© 2026 Keshav Poudel. All rights reserved.</div>
+  </footer>
+
+  <!-- DATA SCRIPTS -->
+  <script src="js/notes-10-np.js"></script>
+  <script src="js/notes-10-en.js"></script>
+  <script src="js/notes-9-np.js"></script>
+  <script src="js/notes-9-en.js"></script>
+  <script src="js/notes-8-np.js"></script>
+  <script src="js/notes-8-en.js"></script>
+
+  <script>
+    /* mobile menu */
+    let mo = false;
+    function toggleMob() {
+      mo = !mo;
+      document.getElementById('mob').classList.toggle('open', mo);
+      document.getElementById('hbtn').classList.toggle('open', mo);
+      document.body.style.overflow = mo ? 'hidden' : '';
+    }
+    function closeMob() { if (mo) toggleMob(); }
+
+    // Navigation scroll effect
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('nav');
+      if (window.scrollY > 20) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    /* Clean URLs (Hides .html from address bar on servers) */
+    if (window.location.protocol !== 'file:' && window.location.pathname.endsWith('.html')) {
+      const cleanUrl = window.location.pathname.replace(/\.html$/, '').replace(/\/index$/, '/');
+      window.history.replaceState(null, '', cleanUrl + window.location.search);
+    }
+
+    /**
+     *  QUICK ADD GUIDE:
+     * To add a new file, copy the block below and paste it into the "resources" list.
+     * 
+     * {
+     *   title: "Name of File",
+     *   description: "Brief description of what it is",
+     *   category: "curriculum", // Choose: practise_questions_sets,notes, solutions, teachers_guide, videos, curriculum, textbook, misc, notice
+     *   class: "10", // Choose: 10, 9, 8, General
+     *   path: "documents/curriculum/filename.pdf", 
+     *   icon: "📜", // Choose: 📜(Curriculum), 📕(Book), 📂(Solution),Notes📄, 📽️(Teachers Guide), 🎬(Video), 📊(Misc), 🔔(Notice)
+     *   size: "1.2 MB"
+     * },
+     */
+    const resources = [
+      // Questions
+     // { title: "notes", description: "notes", category: "notes", class: "10", path: "documents/notes/notes.pdf", icon: "📄", size: "0.5 MB" },
+
+
+      { title: "विद्यालय तहमा पठनपाठन सञ्चालन तथा व्यवस्थापन सम्वन्धमा", description: "शनिवार र आइतवार सार्वजनिक विदा भएको सन्दर्भमा विद्यालय तहमा पठनपाठन सञ्चालनbतथा व्यवस्थापन सम्वन्धमा", category: "notice", class: "General", path: "notice/शनिवार_र_आइतवार_सार्वजनिक_विदा_भएको_सन्दर्भमा_विद्यालय_तहमा_पठनपाठन_सञ्चालन_तथा_व्यवस्थापन_सम्वन्धमा.pdf", icon: "🔔", size: "0.5 MB" },
+      
+      { title: "नेपाल सरकारको नीति तथा कार्यक्रम 2083-01-28", description: "नेपाल सरकारको नीति तथा कार्यक्रम 2083-01-28", category: "notice", class: "General", path: "notice/फाइनल_नीति_तथा_कार्यक्रम_20830128.pdf", icon: "🔔", size: "0.5 MB" },
+      
+      { title: "SEE 2082 कोशी प्रदेश विज्ञान विषयका (Koshi Province) प्रश्‍न पत्रहरु", description: " SEE 2082 कोशी प्रदेशका प्रश्‍नहरू ", category: "practise_questions_sets", class: "10", path: "documents/practice/SEE_2082_Koshi.pdf", icon: "📝", size: "1.2 MB" },
+      { title: "SEE 2082 मधेश प्रदेश विज्ञान विषयका (Madesh Province) प्रश्‍न पत्रहरु", description: " SEE 2082 मधेश प्रदेशका प्रश्‍नहरू ", category: "practise_questions_sets", class: "10", path: "documents/practice/SEE_2082_Madhesh.pdf", icon: "📝", size: "1.2 MB" },
+      { title: "SEE 2082 बागमती प्रदेश विज्ञान विषयका(Bagmati Province) प्रश्‍न पत्रहरु", description: " SEE 2082 बागमती प्रदेशका प्रश्‍नहरू ", category: "practise_questions_sets", class: "10", path: "documents/practice/SEE-2082-Bagmati.pdf", icon: "📝", size: "1.2 MB" },
+      { title: "SEE 2082 गण्डकी प्रदेश विज्ञान विषयका (Gandaki Province) प्रश्‍न पत्रहरु", description: " SEE 2082 गण्डकी प्रदेशका प्रश्‍नहरू ", category: "practise_questions_sets", class: "10", path: "documents/practice/SEE-2082-Gandaki.pdf", icon: "📝", size: "1.2 MB" },
+      { title: "SEE 2082 लुम्बिनी प्रदेश विज्ञान विषयका (Lumbini Province) प्रश्‍न पत्रहरु", description: " SEE 2082 लुम्बिनी प्रदेशका प्रश्‍नहरू ", category: "practise_questions_sets", class: "10", path: "documents/practice/SEE-2082-Lumbini.pdf", icon: "📝", size: "1.2 MB" },
+      { title: "SEE 2082 कर्णाली प्रदेश विज्ञान विषयका (Karnali Province) प्रश्‍न पत्रहरु", description: " SEE 2082 कर्णाली प्रदेशका प्रश्‍नहरू ", category: "practise_questions_sets", class: "10", path: "documents/practice/SEE-2082-Karnali.pdf", icon: "📝", size: "1.2 MB" },
+      { title: "SEE 2082 सुदूर पश्‍चिम प्रदेशका (Sudur Paschim Province) प्रश्‍न पत्रहरु", description: " SEE 2082 सुदूर पश्‍चिम  प्रदेशका प्रश्‍नहरू ", category: "practise_questions_sets", class: "10", path: "documents/practice/SEE-2082-SudurPaschim.pdf", icon: "📝", size: "1.2 MB" },{ title: "Marking Scheme of SEE 2082 विज्ञान विषय Koshi Province ", description: "SEE 2082 Marking Scheme of Koshi Province.", category: "solutions", class: "10", path: "documents/solutions/markingscheme/SEE_2082_KoP_विज्ञान_Marking_Scheme.pdf", icon: "📂", size: "0.5 MB" },
+      { title: "Marking Scheme of SEE 2082 विज्ञान विषय Madhesh Province ", description: "SEE 2082 Marking Scheme of Madhesh Province.", category: "solutions", class: "10", path: "documents/solutions/markingscheme/SEE_2082_MP_विज्ञान_Marking_Scheme.pdf", icon: "📂", size: "0.5 MB" },
+      { title: "Marking Scheme of SEE 2082 विज्ञान विषय Bagmati Province ", description: "SEE 2082 Marking Scheme of Bagmati Province.", category: "solutions", class: "10", path: "documents/solutions/markingscheme/SEE_2082_BP_विज्ञान_Marking_Scheme.pdf", icon: "📂", size: "0.5 MB" },
+      { title: "Marking Scheme of SEE 2082 विज्ञान विषय Gandaki Province ", description: "SEE 2082 Marking Scheme of Gandaki Province.", category: "solutions", class: "10", path: "documents/solutions/markingscheme/SEE_2082_GP_विज्ञन_Marking_Scheme.pdf", icon: "📂", size: "0.5 MB" },
+      { title: "Marking Scheme of SEE 2082 विज्ञान विषय Lumbini Province ", description: "SEE 2082 Marking Scheme of Lumbini Province.", category: "solutions", class: "10", path: "documents/solutions/markingscheme/SEE_2082_LP_विज्ञान_Marking_Scheme.pdf", icon: "📂", size: "0.5 MB" },
+      { title: "Marking Scheme of SEE 2082विज्ञान विषय Karnali Province ", description: "SEE 2082 Marking Scheme of Karnali Province.", category: "solutions", class: "10", path: "documents/solutions/markingscheme/SEE_2082_KaP_विज्ञान_Marking_Scheme.pdf", icon: "📂", size: "0.5 MB" },
+      { title: "Marking Scheme of SEE 2082 Sudur Pashchim Province ", description: "SEE 2082 Marking Scheme of Sudur Pashchim Province.", category: "solutions", class: "10", path: "documents/solutions/markingscheme/SEE_2082_SP_विज्ञान_Marking_Scheme.pdf", icon: "📂", size: "0.5 MB" },
+      { title: "CDC ले तयार पारेका सबै विषयका पाठ्यपुस्तकहरू Download गर्ने Link", description: "CDC को सबै पाठ्यपुस्तकहरू Download गर्न यो Link प्रयोग गर्नुहोस्।", category: "textbook", class: "General", path: "https://moecdc.gov.np/category/textbook--g-/", icon: "🔔", size: "0.5 MB" },
+      
+      { title: "CDC ले तयार पारेका सबै विषयका पाठ्यक्रमहरू Download गर्ने Link", description: "CDC तयार पारेका सबै विषयका पाठ्यक्रमहरू Download गर्न यो Link प्रयोग गर्नुहोस्।", category: "curriculum", class: "General", path: "https://moecdc.gov.np/category/course--g-/", icon: "🔔", size: "0.5 MB" },
+      { title: "CDC ले तयार पारेका सबै शिक्षक निर्देशिकाहरू Download गर्ने Link", description: "CDC ले तयार पारेका सबै शिक्षक निर्देशिकाहरू Download गर्न यो Link प्रयोग गर्नुहोस्।", category: "teachers_guide", class: "General", path: "https://moecdc.gov.np/category/teacher-directory--g-/", icon: "🔔", size: "0.5 MB" },
+      
+      { title: "CDC ले तयार पारेका सबै विषयका विशिष्‍टिकरण तालिकाहरू Download गर्ने Link", description: "CDC ले तयार पारेका सबै विषयका विशिष्‍टिकरण तालिकाहरू Download गर्न यो Link प्रयोग गर्नुहोस्।", category: "notice", class: "General", path: "https://moecdc.gov.np/category/specialization-schedule--g-/", icon: "🔔", size: "0.5 MB" },
+      { title: "NCED को सबै विषयका र सबै कक्षाका भिडियोहरू Download गर्ने Link", description: "NCED को सबै विषयका र सबै कक्षाका भिडियोहरू Download गर्न र हेर्न यो Link प्रयोग गर्नुहोस्।", category: "videos", class: "General", path: "https://www.youtube.com/@NCEDVirtual", icon: "🔔", size: "0.5 MB" },
+    
+      { title: "कासमुका आधारमा शिक्षकको बढुवासम्बन्धी कार्यविधि, २०८२", description: "कार्यसम्पादन मूल्याङ्कनका आधारमा गरिने शिक्षक पदको बढुवासम्बन्धी कार्यविधि, २०८२ ", category: "notice", class: "General", path: "notice/कार्यसम्पादन_मूल्याङ्कनका_आधारमा_गरिने_शिक्षक_पदको_बढुवासम्बन्धी_कार्यविधि_२०८२.pdf", icon: "🔔", size: "0.5 MB" },
+      { title: "शिक्षकको कासमु सहजीकरण पुस्तिका २०८२", description: "शिक्षकको कार्यसम्पादन मूल्याङ्‌कन सहजीकरण पुस्तिका, २०८२ ", category: "notice", class: "General", path: "notice/शिक्षकको_कार्यसम्पादन_मूल्यांकन_सहजीकरण_पुस्तिका_2082.pdf", icon: "🔔", size: "0.5 MB" },
+      
+      { title: "परिमार्जित पाठ्यपुस्तकहरू", description: "शैक्षिक सत्र २०८३ का लागि कक्षा १० को नयाँ तथा परिमार्जित पाठ्यपुस्तकहरू", category: "notice", class: "General", path: "notice/परिमार्जित_२०८२_CDC_पाठ्यपुस्तक_Link.pdf", icon: "🔔", size: "0.5 MB" },
+      
+      { title: "माध्यमिक शिक्षा परीक्षा (SEE) सञ्चालन, व्यवस्थापन तथा उत्तरपुस्तिका परीक्षण निर्देशिका, (२०८२) ", description: "माध्यमिक शिक्षा परीक्षा (SEE) सञ्चालन, व्यवस्थापन तथा उत्तरपुस्तिका परीक्षण निर्देशिका, (२०८२) ", category: "notice", class: "General", path: "notice/माध्यमिक_शिक्षा_परीक्षा_(SEE)_सञ्चालन_ब्यवस्थापन_तथा_उतरपुस्तिका_परीक्षण_निर्देशिका_२०८२.pdf", icon: "🔔", size: "0.5 MB" },
+      { title: "शासकीय सुधार सम्बन्धी १०० कार्यसूची", description: " नेपाल सरकार, मन्त्रिपरिषदको २०८२ चैत्र १३ को बैठकबाट स्वीकृित शासकीय सुधार सम्बन्धी एक सय काययसूचीहरू ", category: "notice", class: "General", path: "notice/शासकीय_सुधार_सम्बन्धी_100_कार्यसूची_१००_क्रियाकलापहरू.pdf", icon: "🔔", size: "0.5 MB" },
+
+      { title: "Specification Grid (Grade-5)", description: "Specification Grid(Grade-5) and CDC Model Questions", category: "practise_questions_sets", class: "General", path: "documents/practice/gridandmodelquestions/Specification_Grid_(Grade-5)_Science_and_echnology_2080.pdf", icon: "📝", size: "1 MB" },
+      { title: "Specification Grid (Grade-6)", description: "Specification Grid(Grade-6) and CDC Model Questions", category: "practise_questions_sets", class: "General", path: "documents/practice/gridandmodelquestions/आधारभुत_तह_कक्षा_६_विशिष्टीकारण_तालिका_२०७८.pdf", icon: "📝", size: "0.9 MB" },
+      { title: "Specification Grid (Grade-8)", description: "Specification Grid(Grade-8) and CDC Model Questions", category: "practise_questions_sets", class: "8", path: "documents/practice/gridandmodelquestions/Specification_Grid_(Grade-8)_Science_and_Technolog.pdf", icon: "📝", size: "0.8 MB" },
+      { title: "Specification Grid (Grade-9)", description: "Specification Grid(Grade-9) and CDC Model Questions", category: "practise_questions_sets", class: "9", path: "documents/practice/gridandmodelquestions/Specification_Grid_(Grade-9)_Science_and_echnology_2078.pdf", icon: "📝", size: "0.8 MB" },
+      { title: "Specification Grid (Grade-10)", description: "Specification Grid(Grade-10) and CDC Model Questions", category: "practise_questions_sets", class: "10", path: "documents/practice/gridandmodelquestions/Specification_Grid_(Grade-10)_Science_and_echnology_2080.pdf", icon: "📝", size: "12 MB" },
+      { title: "NEB Model Set 1 (Grade-10)", description: "NEB Model Set 1", category: "practise_questions_sets", class: "10", path: "documents/practice/gridandmodelquestions/Science_Technology_NEB_Model_set-1.pdf", icon: "📝", size: "0.3 MB" },
+      { title: "NEB Model Set 2 (Grade-10)", description: "NEB Model Set 2", category: "practise_questions_sets", class: "10", path: "documents/practice/gridandmodelquestions/Science_Technology_NEB_Model_set-2.pdf", icon: "📝", size: "0.4 MB" },
+      { title: "NEB Model Set 3 (Grade-10)", description: "NEB Model Set 3", category: "practise_questions_sets", class: "10", path: "documents/practice/gridandmodelquestions/Science_Technology_NEB_Model_set-3.pdf", icon: "📝", size: "0.4 MB" },
+
+      { title: "Pre-SEE 2082 PABSON Set A Science and Technology", description: "PABSON Set A Pre-SEE Exam 2082 practice question sets.", category: "practise_questions_sets", class: "10", path: "documents/practice/PABSON/Pre-SEE_2082_SET_A-Science_and_Technology_PABSON-Questions.pdf", icon: "📝", size: "0.6 MB" },
+      { title: "Pre-SEE 2082 PABSON Set A Science and Technology Answer key", description: "PABSON Set A Pre-SEE Exam 2082 Answer key.", category: "practise_questions_sets", class: "10", path: "documents/practice/PABSON/SET_A_Science_and_Technology_Pre-SEE_2082_PABSON_Answer_Key.pdf", icon: "📝", size: "0.6 MB" },
+      { title: "Pre-SEE 2082 PABSON Set B Science and Technology", description: "PABSON Set B Pre-SEE Exam 2082 practice question sets.", category: "practise_questions_sets", class: "10", path: "documents/practice/PABSON/Pre-SEE_2082_SET_B-Science_and_Technology_PABSON_Questions.pdf", icon: "📝", size: "2 MB" },
+      { title: "Pre-SEE 2082 PABSON Set B Science and Technology Answer key", description: "PABSON Set B Pre-SEE Exam 2082 Answer Key.", category: "practise_questions_sets", class: "10", path: "documents/practice/PABSON/SET_B_Science_and_Technology_Pre-SEE_2082_PABSON_Answer_Key.pdf", icon: "📝", size: "0.6 MB" },
+      { title: "Koshi Science 2081", description: "SEE Class 10 Koshi Province Science practice question sets.", category: "practise_questions_sets", class: "10", path: "documents/practice/NEB/SEE_2081_Koshi_Province_Science_and_Technology.pdf", icon: "📝", size: "0.5 MB" },
+      { title: "Madhesh Science 2081", description: "SEE Class 10 Madhesh Province Science practice question sets.", category: "practise_questions_sets", class: "10", path: "documents/practice/NEB/SEE_2081_Madhesh_Province_Science_and_Technology.pdf", icon: "📝", size: "0.5 MB" },
+      { title: "Bagmati Science 2081", description: "SEE Class 10 Bagmati Province Science practice question sets.", category: "practise_questions_sets", class: "10", path: "documents/practice/NEB/SEE_2081_Bagmati_Province_Science_and_Technology.pdf", icon: "📝", size: "0.5 MB" },
+      { title: "Gandaki Science 2081", description: "SEE Class 10 Gandaki Province Science practice question sets.", category: "practise_questions_sets", class: "10", path: "documents/practice/NEB/SEE_2081_Gandaki_Province_Science_and_Technology.pdf", icon: "📝", size: "0.5 MB" },
+      { title: "Lumbini Science 2081", description: "SEE Class 10 Lumbini Province Science practice question sets.", category: "practise_questions_sets", class: "10", path: "documents/practice/NEB/SEE_2081_Lumbini_Province_Science_and_Technology.pdf", icon: "📝", size: "0.5 MB" },
+      { title: "Karnali Science 2081", description: "SEE Class 10 Karnali Province Science practice question sets.", category: "practise_questions_sets", class: "10", path: "documents/practice/NEB/SEE_2081_Karnali_Province_Science_and_Technology.pdf", icon: "📝", size: "0.5 MB" },
+      { title: "Sudur Pashchim Science 2081", description: "SEE Class 10 Sudur Pashchim Province Science practice question sets.", category: "practise_questions_sets", class: "10", path: "documents/practice/NEB/SEE_2081_Sudur_Pashchim_Province_Science_and_Technology.pdf", icon: "📝", size: "0.5 MB" },
+
+      { title: "Bagmati Science 2080", description: "SEE Class 10 Bagmati Province Science practice question sets.", category: "practise_questions_sets", class: "10", path: "documents/practice/Bagmati_Science_2080.pdf", icon: "📝", size: "1.2 MB" },
+      { title: "Gandaki Science 2080", description: "SEE Class 10 Gandaki Province Science practice question sets.", category: "practise_questions_sets", class: "10", path: "documents/practice/Gandaki_Science_2080.pdf", icon: "📝", size: "1.2 MB" },
+      { title: "Karnali Science 2080", description: "SEE Class 10 Karnali Province Science practice question sets.", category: "practise_questions_sets", class: "10", path: "documents/practice/Karnali_Science_2080.pdf", icon: "📝", size: "1.2 MB" },
+      { title: "Koshi Science 2080", description: "SEE Class 10 Koshi Province Science practice question sets.", category: "practise_questions_sets", class: "10", path: "documents/practice/Koshi_Science_2080.pdf", icon: "📝", size: "1.2 MB" },
+      { title: "Lumbini Science 2080", description: "SEE Class 10 Lumbini Province Science practice question sets.", category: "practise_questions_sets", class: "10", path: "documents/practice/Lumbini_Science_2080.pdf", icon: "📝", size: "1.2 MB" },
+      { title: "Madhesh Science 2080", description: "SEE Class 10 Madhesh Province Science practice question sets.", category: "practise_questions_sets", class: "10", path: "documents/practice/Madhesh_Science_2080.pdf", icon: "📝", size: "1.2 MB" },
+      { title: "Sudur Pashchim Science 2080", description: "SEE Class 10 Sudur Pashchim Province Science practice question sets.", category: "practise_questions_sets", class: "10", path: "documents/practice/Sudur_Pashchim_Science_2080.pdf", icon: "📝", size: "1.2 MB" },
+      { title: "Pre-SEE 2080 PABSON Set A Science and Technology", description: "PABSON Set A Pre-SEE Exam 2080 practice question sets.", category: "practise_questions_sets", class: "10", path: "documents/practice/PABSON/Set_A_Science_and_Technology_Pre-SEE_2080_PABSON.pdf", icon: "📝", size: "1.2 MB" },
+      { title: "Pre-SEE 2080 PABSON Set C Science and Technology", description: "PABSON Set C Pre-SEE Exam 2080 practice question sets.", category: "practise_questions_sets", class: "10", path: "documents/practice/PABSON/Set_C_Science_and_Technology_Pre-SEE_2080_PABSON.pdf", icon: "📝", size: "1.2 MB" },
+      { title: "Pre-SEE 2080 PABSON Set D Science and Technology", description: "PABSON Set D Pre-SEE Exam 2080 practice question sets.", category: "practise_questions_sets", class: "10", path: "documents/practice/PABSON/Set_D_Science_and_Technology_Pre-SEE_2080_PABSON.pdf", icon: "📝", size: "1.2 MB" },
+      { title: "Pre-SEE 2080 PABSON Set B Science and Technology", description: "PABSON Set B Pre-SEE Exam 2080 practice question sets.", category: "practise_questions_sets", class: "10", path: "documents/practice/PABSON/Set_B_Science_and_Technology_Pre-SEE_2080_PABSON.pdf", icon: "📝", size: "1.2 MB" },
+      { title: "Pre-SEE 2081 PABSON Set A Science and Technology", description: "PABSON Set A Pre-SEE Exam 2081 practice question sets.", category: "practise_questions_sets", class: "10", path: "documents/practice/PABSON/Set_A_Science_and_Technology_Pre-SEE_2081_PABSON.pdf", icon: "📝", size: "1.2 MB" },
+      { title: "Pre-SEE 2081 PABSON Set B Science and Technology", description: "PABSON Set B Pre-SEE Exam 2081 practice question sets.", category: "practise_questions_sets", class: "10", path: "documents/practice/PABSON/Set_B_Science_and_Technology_Pre-SEE_2081_PABSON.pdf", icon: "📝", size: "1.2 MB" },
+      { title: "Pre-SEE 2081 PABSON Set D Science and Technology", description: "PABSON Set D Pre-SEE Exam 2081 practice question sets.", category: "practise_questions_sets", class: "10", path: "documents/practice/PABSON/Set_D_Science_and_Technology_Pre-SEE_2081_PABSON.pdf", icon: "📝", size: "1.2 MB" },
+      { title: "Pre-SEE 2081 PABSON Set E Science and Technology", description: "PABSON Set E Pre-SEE Exam 2081 practice question sets.", category: "practise_questions_sets", class: "10", path: "documents/practice/PABSON/Set_E_Science_and_Technology_Pre-SEE_2081_PABSON.pdf", icon: "📝", size: "1.2 MB" },
+
+      // Solutions
+      
+      
+      { title: "Marking Scheme of SEE 2081 Koshi Province ", description: "SEE Class 10 Marking Scheme of SEE Koshi Province.", category: "solutions", class: "10", path: "documents/solutions/markingscheme/2081_SEE_Koshi_Province_Science-and_Technology_Marking_Scheme.pdf", icon: "📂", size: "0.5 MB" },
+      { title: "Marking Scheme of SEE 2081 Madhesh Province ", description: "SEE Class 10 Marking Scheme of SEE Madhesh Province.", category: "solutions", class: "10", path: "documents/solutions/markingscheme/2081_SEE_Madhesh_Province_Science-and_Technology_Marking_Scheme.pdf", icon: "📂", size: "0.5 MB" },
+      { title: "Marking Scheme of SEE 2081 Bagmati Province ", description: "SEE Class 10 Marking Scheme of SEE Bagmati Province.", category: "solutions", class: "10", path: "documents/solutions/markingscheme/2081_SEE_Bagmati_Province_Science-and_Technology_Marking_Scheme.pdf", icon: "📂", size: "0.5 MB" },
+      { title: "Marking Scheme of SEE 2081 Gandaki Province ", description: "SEE Class 10 Marking Scheme of SEE Gandaki Province.", category: "solutions", class: "10", path: "documents/solutions/markingscheme/2081_SEE_Gandaki_Province_Science-and_Technology_Marking_Scheme.pdf", icon: "📂", size: "0.5 MB" },
+      { title: "Marking Scheme of SEE 2081 Lumbini Province ", description: "SEE Class 10 Marking Scheme of SEE Lumbini Province.", category: "solutions", class: "10", path: "documents/solutions/markingscheme/2081_SEE_Lumbini_Province_Science-and_Technology_Marking_Scheme.pdf", icon: "📂", size: "0.5 MB" },
+      { title: "Marking Scheme of SEE 2081 Karnali Province ", description: "SEE Class 10 Marking Scheme of SEE Karnali Province.", category: "solutions", class: "10", path: "documents/solutions/markingscheme/2081_SEE_Karnali_Province_Science-and_Technology_Marking_Scheme.pdf", icon: "📂", size: "0.5 MB" },
+      { title: "Marking Scheme of SEE Sudur Pashchim Province ", description: "SEE Class 10 Marking Scheme of SEE Sudur Pashchim Province.", category: "solutions", class: "10", path: "documents/solutions/markingscheme/2081_SEE_Sudur_Pashchim_Province_Science-and_Technology_Marking_Scheme.pdf", icon: "📂", size: "0.5 MB" },
+
+
+      { title: "Koshi Province Nepali Medium", description: "SEE Class 10 Koshi Province Science solution.", category: "solutions", class: "10", path: "documents/solutions/1._Koshi_Province_pdf_Nepali_Medium.pdf", icon: "📂", size: "1.5 MB" },
+      { title: "Madhesh Province Nepali Medium", description: "SEE Class 10 Madhesh Province Science solution.", category: "solutions", class: "10", path: "documents/solutions/2.Madhesh_Province_Nepali_Medium.pdf", icon: "📂", size: "1.5 MB" },
+      { title: "Bagmati Province Nepali Medium", description: "SEE Class 10 Bagmati Province Science solution.", category: "solutions", class: "10", path: "documents/solutions/3._Bagmati_Province_Nepali_Medium.pdf", icon: "📂", size: "1.5 MB" },
+      { title: "Gandaki Province Nepali Medium", description: "SEE Class 10 Gandaki Province Science solution.", category: "solutions", class: "10", path: "documents/solutions/4.Gandaki_Province_Nepali_Medium.pdf", icon: "📂", size: "1.5 MB" },
+      { title: "Lumbini Province Nepali Medium", description: "SEE Class 10 Lumbini Province Science solution.", category: "solutions", class: "10", path: "documents/solutions/5.Lumbini_Province_Nepali_Medium.pdf", icon: "📂", size: "1.5 MB" },
+      { title: "Karnali Province Nepali Medium", description: "SEE Class 10 Karnali Province Science solution.", category: "solutions", class: "10", path: "documents/solutions/6.Karnali_Province_nepali_Medium.pdf", icon: "📂", size: "1.5 MB" },
+      { title: "Sudurpaschim Province Nepali Medium", description: "SEE Class 10 Sudurpaschim Province Science solution.", category: "solutions", class: "10", path: "documents/solutions/7.Sudurpaschim_Province_Nepali_Medium.pdf", icon: "📂", size: "1.5 MB" },
+      { title: "SEE Grade Increment 2080 Solution", description: "Class 10 Grade Increment solution in Nepali Medium.", category: "solutions", class: "10", path: "documents/solutions/SEE_Grade_Increment_2080_Solution_Nepali_Medium.pdf", icon: "📂", size: "2.1 MB" },
+      { title: "SEE Model Set 1 Solution 2080", description: "SEE Class 10 Model Set 1 Solution.", category: "solutions", class: "10", path: "documents/solutions/SEE_Model_Set_1_Solution_2080.pdf", icon: "📂", size: "0.8 MB" },
+      { title: "SEE Model Set 2 Solution 2080", description: "SEE Class 10 Model Set 2 Solution.", category: "solutions", class: "10", path: "documents/solutions/SEE_Model_Set_2_Solution_2080.pdf", icon: "📂", size: "0.8 MB" },
+      { title: "SEE Model Set 3 Solution 2080", description: "SEE Class 10 Model Set 3 Solution.", category: "solutions", class: "10", path: "documents/solutions/SEE_Model_Set_3_Solution_2080.pdf", icon: "📂", size: "0.8 MB" },
+      { title: "SEE Solution of All Province", description: "Complete compilation of SEE Class 10 solutions for all provinces.", category: "solutions", class: "10", path: "documents/solutions/SEE_Solution_of_All_Province_and_Grade_Increment_2080.pdf", icon: "📂", size: "5.5 MB" },
+
+
+      //textbook
+      { title: "विज्ञान तथा प्रविधि कक्षा 8 PartA Textbook नेपाली माध्यम", description: "विज्ञान तथा प्रविधि कक्षा 8 PartA Textbook नेपाली माध्यम", category: "textbook", class: "8", path: "documents/textbook/nepalimedium/विज्ञान_तथा_प्रविधि_कक्षा_8_PartA_Textbook_नेपाली_माध्यम.pdf", icon: "📝", size: "15 MB" },
+      { title: "विज्ञान तथा प्रविधि कक्षा 8 PartB Textbook नेपाली माध्यम", description: "विज्ञान तथा प्रविधि कक्षा 8 PartB Textbook नेपाली माध्यम", category: "textbook", class: "8", path: "documents/textbook/nepalimedium/विज्ञान_तथा_प्रविधि_कक्षा_8_PartB_Textbook_नेपाली_माध्यम.pdf", icon: "📝", size: "0.6 MB" },
+      { title: "विज्ञान तथा प्रविधि कक्षा 9 Textbook नेपाली माध्यम", description: "विज्ञान तथा प्रविधि कक्षा 9 Textbook नेपाली माध्यम", category: "textbook", class: "9", path: "documents/textbook/nepalimedium/कक्षा_९_विज्ञान_तथा_प्रविधि_TextBook_नेपाली_माध्यम.pdf", icon: "📝", size: "0.6 MB" },
+
+      { title: "विज्ञान तथा प्रविधि कक्षा 10 Textbook नेपाली माध्यम", description: "विज्ञान तथा प्रविधि कक्षा 10 Textbook नेपाली माध्यम", category: "textbook", class: "10", path: "documents/textbook/nepalimedium/कक्षा_१०_विज्ञान_तथा_प्रविधि_TextBook_नेपाली_माध्यम.pdf", icon: "📝", size: "18 MB" },
+           { title: "Science and Technology Class 8 Part A Textbook English Medium", description: "Science and Technology Class 8 Part A Textbook English Medium", category: "textbook", class: "8", path: "documents/textbook/englishmedium/Science_and_Technology_8_PartA_English_Medium_Textbook.pdf", icon: "📝", size: "23 MB" },
+      { title: "Science and Technology Class 8 Part B Textbook English Medium", description: "Science and Technology Class 8 Part B Textbook English Medium", category: "textbook", class: "8", path: "documents/textbook/englishmedium/Science_and_Technology_8_PartB_English_Medium_Textbook.pdf", icon: "📝", size: "7 MB" },
+      { title: "Science and Technology Class 9 Textbook English Medium", description: "Science and Technology Class 9 Textbook English Medium", category: "textbook", class: "9", path: "documents/textbook/englishmedium/Science_and_Technology_9_English_Medium_Textbook.pdf", icon: "📝", size: "22 MB" },
+
+      { title: "Science and Technology Class 10 Part A Textbook English Medium", description: "Science and Technology Class 10 Part A Textbook English Medium", category: "textbook", class: "10", path: "documents/textbook/englishmedium/Science_and_Technology_10_PartA_English_Medium_Textbook.pdf", icon: "📝", size: "28 MB" },
+      { title: "Science and Technology Class 10 Part B Textbook English Medium", description: "Science and Technology Class 10 Part B Textbook English Medium", category: "textbook", class: "10", path: "documents/textbook/englishmedium/Science_and_Technology_10_PartB_English_Medium_Textbook.pdf", icon: "📝", size: "25 MB" },
+      { title: "Science and Technology Class 10 Part C Textbook English Medium", description: "Science and Technology Class 10 Part C Textbook English Medium", category: "textbook", class: "10", path: "documents/textbook/englishmedium/Science_and_Technology_10_PartC_English_Medium_Textbook.pdf", icon: "📝", size: "13 MB" },
+      { title: "Science and Technology Curriculum", description: "आधारभूत तह (१-३)को पाठ्यक्रम २०७६", category: "curriculum", class: "General", path: "documents/curriculum/आधारभूत_तह_(१-३)_को_पाठ्यक्रम_२०७६.pdf", icon: "📝", size: "2 MB" },
+      { title: "Science and Technology Curriculum", description: "आधारभूत तह (४-५)को पाठ्यक्रम २०७८", category: "curriculum", class: "General", path: "documents/curriculum/आधारभूत_तह_(४-५)_को_पाठ्यक्रम_विज्ञान_तथा_प्रविधि_2078.pdf", icon: "📝", size: "6 MB" },
+      { title: "Science and Technology Curriculum", description: "आधारभूत तह (६-८)को पाठ्यक्रम २०७९", category: "curriculum", class: "General", path: "documents/curriculum/आधारभूत_तह_(६-८)_को_पाठ्यक्रम_2079_विज्ञान_तथा_प्रविधि.pdf", icon: "📝", size: "1 MB" },
+      { title: "Science and Technology Curriculum", description: "माध्यमिक तह (९-१०)को पाठ्यक्रम २०७६", category: "curriculum", class: "General", path: "documents/curriculum/माध्यमिक_तह_(९-१०)_को_पाठ्यक्रम_विज्ञान_तथा_प्रविधि_२०७६.pdf", icon: "📝", size: "९ MB" },
+
+
+      // teachers_guide
+      { title: "TG Grade 8 Science", description: "Teacher Guide for Grade 8 Science.", category: "teachers_guide", class: "8", path: "documents/teachersguide/TG_Grade_8_Science.pdf", icon: "📽️", size: "1.4 MB" },
+      { title: "TG Grade 9 Science", description: "Teacher Guide for Grade 9 Science.", category: "teachers_guide", class: "9", path: "documents/teachersguide/TG_Grade_9_Science.pdf", icon: "📽️", size: "1.4 MB" },
+      { title: "TG Grade 10 Science", description: "Teacher Guide for Grade 10 Science.", category: "teachers_guide", class: "10", path: "documents/teachersguide/TG_Grade_10_Science.pdf", icon: "📽️", size: "1.4 MB" },
+
+
+      // Videos
+      { title: "NCED Class 10 Science Nepali Medium", description: "NCED Youtube video PlayList Class 10 Science Nepali Medium", category: "videos", class: "10", path: "https://youtube.com/playlist?list=PLVOHiHZt8InLYjO3zlgtE6pUkrFy2iTQ4&si=YLQz12wOAGBdMq9p", icon: "🎬", size: "YouTube" },
+
+      { title: "NCED Class 10 Science English Medium", description: "NCED Youtube video PlayList Class 10 Science English Medium", category: "videos", class: "10", path: "https://youtube.com/playlist?list=PLVOHiHZt8InKqRxy3MY7s2z_Hh817b6vV&si=S7-o8VxarM1Mjusa", icon: "🎬", size: "YouTube" },
+      { title: "NCED Class 9 Science Nepali Medium", description: "NCED Youtube video PlayList Class 9 Science Nepali Medium", category: "videos", class: "9", path: "https://youtube.com/playlist?list=PLVOHiHZt8InIiJNHgdETp_BCaANPqFfHc&si=pHg4L0PbACUz6veB", icon: "🎬", size: "YouTube" },
+      { title: "NCED Class 9 Science English Medium", description: "NCED Youtube video PlayList Class 9 Science English Medium", category: "videos", class: "9", path: "https://youtube.com/playlist?list=PLVOHiHZt8InJc14x-X--d6nSVzCpubSGm&si=kj4DOVn8CHWAHqjP", icon: "🎬", size: "YouTube" },
+      { title: "NCED Class 8 Science Nepali Medium", description: "NCED Youtube video PlayList Class 8 Science Nepali Medium", category: "videos", class: "8", path: "https://youtube.com/playlist?list=PLVOHiHZt8InKFkAp5__pLoy4CLrRau2sZ&si=BgBvhNXKfARefi3H", icon: "🎬", size: "YouTube" },
+      { title: "NCED Class 8 Science English Medium", description: "NCED Youtube video PlayList Class 8 Science Nepali Medium", category: "videos", class: "8", path: "https://youtube.com/playlist?list=PLVOHiHZt8InK0nQCMSniGSwiB0_5rUDIi&si=6wdDdPWevCxPGt5B", icon: "🎬", size: "YouTube" },
+
+      { title: "ICT Training of class 10 Day 1", description: "ICT unit of Class 10 Conducted by STAN Lumbini, Day 1,2080 Magh 22, Virtual", category: "videos", class: "10", path: "https://www.youtube.com/watch?v=IGCnkwVMorY&t=325s", icon: "🎬", size: "YouTube" },
+      { title: "ICT Training of class 10 Day 2", description: "ICT unit of Science Class 10 Conducted by STAN Lumbini, Day 2,2080 Magh 23, Virtual", category: "videos", class: "10", path: "https://www.youtube.com/watch?v=-owMFUVyJKA&t=16s", icon: "🎬", size: "YouTube" },
+
+      { title: "ICT Training of class 10 Day 3", description: "ICT unit of Class 10 Conducted by STAN Lumbini, Day  3, 2080 Magh 24, Virtual", category: "videos", class: "10", path: "https://www.youtube.com/watch?v=_v2ee3kZYVA&t=30s", icon: "🎬", size: "YouTube" },
+      { title: "Opinion on Digital Education and AI", description: "Opinion of Yam Nath Poudel on Digital Education and AI on programme Cyber cafe on NTV Kohalpur ", category: "videos", class: "General", path: "https://www.youtube.com/watch?v=O_VTpmP8WLM&t=5s", icon: "🎬", size: "YouTube" },
+      { title: "Panalist Yam Nath Poudel STAN Lumbini Province President", description: "Panalist Yam Nath Poudel (Science Teachers' Association of Nepal (STAN) Lumbini Province President", category: "videos", class: "General", path: "https://www.youtube.com/watch?v=ZkmCRt2ur6M", icon: "🎬", size: "YouTube" },
+      { title: "Farewell programme of Yam Nath Poudel", description: "Farewell programme of Yam Nath Poudel by Sharada S.S., Mainapokhar, Bardiya ", category: "videos", class: "General", path: "https://www.youtube.com/watch?v=4_2ciM9KJx0", icon: "🎬", size: "YouTube" },
+      { title: "BIHANISAMBAD 2079-11-10  With Yam Nath Poudel", description: "Describing about STAN by President of Lumbini Province Yam Nath Poudel ", category: "videos", class: "General", path: "https://www.youtube.com/watch?v=J2xPyjTPXC0", icon: "🎬", size: "YouTube" },
+
+      { title: "Pressure & Its Effects", description: "Video demonstration and explanation of pressure principles.", category: "videos", class: "10", path: "https://www.youtube.com/watch?v=GX-OrO8y8L0", icon: "🎬", size: "YouTube" }
+    ];
+
+
+    let currentType = 'all';
+    let currentClass = '10';
+    let currentMedium = 'np';
+
+    function setTypeFilter(category) {
+      currentType = category;
+      document.getElementById('mediumToggle').style.display = (category === 'notes') ? 'flex' : 'none';
+      updateFilterButtons('typeFilters', category);
+      renderResources();
+    }
+
+    function setClassFilter(cls) {
+      currentClass = cls;
+      updateFilterButtons('classFilters', cls);
+      renderResources();
+    }
+
+    function setMedium(med, btn) {
+      currentMedium = med;
+      btn.parentElement.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderResources();
+    }
+
+    function renderResources() {
+      const grid = document.getElementById('resourceGrid');
+      const emptyState = document.getElementById('emptyState');
+      const search = document.getElementById('searchInput').value.toLowerCase();
+
+      // Clear grid
+      grid.innerHTML = "";
+      grid.appendChild(emptyState);
+      emptyState.style.display = 'none';
+
+      // 1. IF 'Notes' is selected
+      if (currentType === 'notes') {
+        renderNotesGrid(grid, search);
+      }
+
+      // 2. IF 'All' or a specific static type is selected
+      if (currentType !== 'notes') {
+        // Define priority for categories in 'All' view
+        const priority = {
+          'practise_questions_sets': 1,
+          'solutions': 2,
+          'textbook': 3,
+          'curriculum': 4,
+          'teachers_guide': 5,
+          'videos': 6,
+          'notice': 7,
+          'misc': 8
+        };
+
+        const filtered = resources.filter(res => {
+          const matchesType = currentType === 'all' || res.category === currentType;
+          const matchesClass = currentClass === 'all' || res.class === currentClass;
+          const matchesSearch = res.title.toLowerCase().includes(search) || res.description.toLowerCase().includes(search);
+          return matchesType && matchesClass && matchesSearch;
+        }).sort((a, b) => (priority[a.category] || 99) - (priority[b.category] || 99));
+
+        if (filtered.length === 0 && currentType !== 'all') {
+          // If in 'All' view, we might have notes even if filtered files are 0
+          if (grid.querySelectorAll('.unit-card').length === 0) {
+            emptyState.style.display = 'block';
+          }
+        } else {
+          filtered.forEach(res => {
+            const card = document.createElement('a');
+            card.className = 'file-card';
+            card.href = res.path;
+            card.target = "_blank";
+            card.innerHTML = `
+              <span class="file-class">${res.class}</span>
+              <div class="file-icon">${res.icon}</div>
+              <div class="file-info">
+                <h3>${res.title}</h3>
+                <p>${res.description}</p>
+              </div>
+              <div class="file-meta">
+                <span class="file-type">${res.category.replace(/_/g, ' ')}</span>
+                <span class="file-size">${res.size}</span>
+              </div>
+            `;
+            grid.appendChild(card);
+          });
+        }
+      }
+    }
+
+    function renderNotesGrid(grid, search) {
+      const actualClass = currentClass === 'all' ? '10' : currentClass;
+      const dataKey = `notesData${actualClass}${currentMedium.toUpperCase()}`;
+      const data = window[dataKey];
+      
+      let found = 0;
+      for (let i = 1; i <= 20; i++) {
+        const unit = data?.[i];
+        if (unit && (unit.title.toLowerCase().includes(search) || unit.intro.toLowerCase().includes(search))) {
+          found++;
+          const card = document.createElement('a');
+          card.className = 'file-card';
+          card.href = 'javascript:void(0)';
+          card.onclick = () => loadNote(actualClass, currentMedium, i);
+          card.innerHTML = `
+            <span class="file-class">${actualClass}</span>
+            <div class="file-icon">📖</div>
+            <div class="file-info">
+              <div style="font-size:0.65rem; color:var(--gold); font-weight:800; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:4px;">Unit ${i}</div>
+              <h3>${unit.title}</h3>
+              <p>${unit.intro.substring(0, 80)}...</p>
+            </div>
+            <div class="file-meta">
+              <span class="file-type">Study Notes</span>
+              <span class="file-size">Interactive</span>
+            </div>
+          `;
+          grid.appendChild(card);
+        }
+      }
+
+      if (found === 0) {
+        document.getElementById('emptyState').style.display = 'block';
+        document.getElementById('emptyState').innerHTML = `<h3>Notes coming soon for Class ${actualClass}.</h3>`;
+      }
+    }
+
+    function loadNote(cls, med, unitNum) {
+      const dataKey = `notesData${cls}${med.toUpperCase()}`;
+      const data = window[dataKey]?.[unitNum];
+      if (!data) return;
+
+      const reader = document.getElementById('reader-view');
+      const content = document.getElementById('reader-content');
+      
+      reader.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+
+      // Function to bold the part before colon
+      const formatSummary = (text) => {
+        if (text.includes(':')) {
+          const parts = text.split(':');
+          return `<b>${parts[0]}:</b>${parts.slice(1).join(':')}`;
+        }
+        return text;
+      };
+
+      let html = `
+        <!-- Hero / Title -->
+        <div class="hero-note" data-reveal>
+          <h1 style="font-family:'Cormorant Garamond', serif; font-size:clamp(2.5rem, 5vw, 4rem); color:#fff; margin-bottom:1rem;">${data.title}</h1>
+          <div class="intro-card">${data.intro}</div>
+        </div>
+
+        <!-- 1. Quick Summary -->
+        ${data.summary ? `
+          <div class="section-card" data-reveal>
+            <div class="section-header"><h2>Quick Summary</h2><div class="line"></div></div>
+            <ul style="list-style:none;">
+              ${data.summary.map(s => `
+                <li style="margin-bottom:1.2rem; padding-left:1.8rem; position:relative; line-height:1.7;">
+                  <span style="position:absolute; left:0; color:var(--gold); font-size:1.2rem;">✦</span> 
+                  ${formatSummary(s)}
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+        ` : ''}
+
+        <!-- 2. Interactive Quiz -->
+        ${data.mcqs ? `
+          <div class="section-card" data-reveal>
+            <div class="section-header"><h2>Interactive Quiz</h2><div class="line"></div></div>
+            <div class="mcq-container">
+              ${data.mcqs.map((m, idx) => `
+                <div class="mcq-card">
+                  <div class="mcq-num">${idx+1}</div>
+                  <span class="mcq-question">${m.q}</span>
+                  <div class="mcq-options">
+                    ${m.options.map((opt, oIdx) => `
+                      <button class="option-btn" onclick="checkAnswer(this, ${oIdx}, ${m.a})">
+                        <span style="color:var(--gold); font-weight:800; margin-right:12px;">(${(['i','ii','iii','iv'])[oIdx]})</span> 
+                        ${opt}
+                      </button>
+                    `).join('')}
+                  </div>
+                  ${m.hint ? `<div style="margin-top:1rem; font-size:0.8rem; color:rgba(255,255,255,0.3); font-style:italic;">Hint: ${m.hint}</div>` : ''}
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
+
+        <!-- 3. Very Short Q&A -->
+        ${data.vshort ? `
+          <div class="section-card" data-reveal>
+            <div class="section-header"><h2>Very Short Questions</h2><div class="line"></div></div>
+            ${data.vshort.map(v => `
+              <div class="qa-card">
+                <p class="qa-q">Q: ${v.q}</p>
+                <p class="qa-a gold">A: ${v.a}</p>
+              </div>
+            `).join('')}
+          </div>
+        ` : ''}
+
+        <!-- 4. Short Q&A -->
+        ${data.short ? `
+          <div class="section-card" data-reveal>
+            <div class="section-header"><h2>Short Questions</h2><div class="line"></div></div>
+            ${data.short.map(s => `
+              <div class="qa-card">
+                <p class="qa-q">Q: ${s.q}</p>
+                <p class="qa-a">A: ${s.a}</p>
+              </div>
+            `).join('')}
+          </div>
+        ` : ''}
+
+        <!-- 5. Differences -->
+        ${data.differences ? `
+          <div class="section-card" data-reveal>
+            <div class="section-header"><h2>Key Differences</h2><div class="line"></div></div>
+            ${data.differences.map(diff => `
+              <div style="margin-bottom:2.5rem;">
+                <h3 style="color:var(--gold); margin-bottom:1.2rem; font-size:1.2rem;">${diff.title}</h3>
+                <div class="diff-table-wrapper">
+                  <table class="diff-table">
+                    <thead>
+                      <tr>${diff.headers.map(h => `<th>${h}</th>`).join('')}</tr>
+                    </thead>
+                    <tbody>
+                      ${diff.rows.map(row => `
+                        <tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>
+                      `).join('')}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        ` : ''}
+
+        <!-- 6. Give Reasons -->
+        ${data.reasons ? `
+          <div class="section-card" data-reveal>
+            <div class="section-header"><h2>Give Reasons</h2><div class="line"></div></div>
+            ${data.reasons.map(r => `
+              <div class="qa-card" style="border-left-color: var(--gold2);">
+                <p class="qa-q">Q: ${r.q}</p>
+                <p class="qa-a" style="font-style:italic;">Reason: ${r.a}</p>
+              </div>
+            `).join('')}
+          </div>
+        ` : ''}
+
+        <!-- 7. Long Questions -->
+        ${data.long ? `
+          <div class="section-card" data-reveal>
+            <div class="section-header"><h2>Long Questions</h2><div class="line"></div></div>
+            ${data.long.map(l => `
+              <div class="qa-card" style="border-left-width: 6px;">
+                <p class="qa-q" style="font-size:1.2rem;">Q: ${l.q}</p>
+                <p class="qa-a" style="font-size:1.05rem;">A: ${l.a}</p>
+              </div>
+            `).join('')}
+          </div>
+        ` : ''}
+
+        <!-- 8. Practice Corner -->
+        ${data.practice ? `
+          <div class="section-card" data-reveal>
+            <div class="section-header"><h2>Practice Corner</h2><div class="line"></div></div>
+            <div class="practice-box">
+              ${data.practice.mcqs ? `
+                <div style="margin-bottom:1.5rem;">
+                  <strong style="color:var(--gold); display:block; margin-bottom:10px;">MCQs to Practice:</strong>
+                  <ul style="list-style:none;">
+                    ${data.practice.mcqs.map(pq => `<li style="margin-bottom:8px; padding-left:1rem; position:relative; color:rgba(255,255,255,0.7);"><span style="position:absolute; left:0; color:var(--gold);">•</span> ${pq}</li>`).join('')}
+                  </ul>
+                </div>
+              ` : ''}
+              ${data.practice.vshort ? `<div style="margin-bottom:1rem;"><strong style="color:var(--gold);">Very Short:</strong> ${data.practice.vshort.join(', ')}</div>` : ''}
+              ${data.practice.short ? `<div><strong style="color:var(--gold);">Short & Long:</strong> ${data.practice.short.join(', ')}</div>` : ''}
+            </div>
+          </div>
+        ` : ''}
+      `;
+      content.innerHTML = html;
+      initReveal();
+    }
+
+    function closeReader() {
+      document.getElementById('reader-view').style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    function checkAnswer(btn, selected, correct) {
+      if (btn.parentElement.querySelector('.active')) return;
+      const opts = btn.parentElement.querySelectorAll('.filter-btn');
+      opts[correct].style.background = 'rgba(72, 187, 120, 0.2)';
+      opts[correct].style.borderColor = '#48bb78';
+      if (selected !== correct) {
+        btn.style.background = 'rgba(245, 101, 101, 0.2)';
+        btn.style.borderColor = '#f56565';
+      }
+    }
+
+    function updateFilterButtons(groupId, activeVal) {
+      const container = document.getElementById(groupId);
+      if (!container) return;
+      container.querySelectorAll('.filter-btn').forEach(b => {
+        const val = groupId === 'typeFilters' ? b.dataset.type : b.dataset.class;
+        b.classList.toggle('active', val === activeVal);
+      });
+    }
+
+    function filterItems() { renderResources(); }
+
+    window.onload = () => {
+      setTypeFilter('all');
+      setClassFilter('10');
+    };
+  </script>
+</body>
+
+</html>
