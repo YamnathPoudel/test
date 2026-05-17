@@ -789,6 +789,22 @@
     .option-btn.correct { background: rgba(34, 197, 94, 0.1) !important; border-color: #22c55e !important; color: #4ade80 !important; }
     .option-btn.wrong { background: rgba(239, 68, 68, 0.1) !important; border-color: #ef4444 !important; color: #f87171 !important; }
 
+    /* Custom Tags for easy JSON editing */
+    indent, tab {
+      display: block;
+      padding-left: 1.5rem;
+      line-height: 1.8;
+      margin: 0.5rem 0;
+    }
+    line {
+      display: block;
+      margin-top: 0.5rem;
+    }
+    gap {
+      display: block;
+      height: 1.2rem;
+    }
+
     /* Q&A Modern Style */
     .qa-card {
       background: var(--card-bg);
@@ -949,7 +965,7 @@
     </div>
 
     <!-- READER VIEW -->
-    <div id="reader-view">
+    <div id="reader-view" style="user-select: none; -webkit-user-select: none;">
       <div class="back-btn" onclick="showLibrary()">
         <span>←</span> Back to Lessons Library
       </div>
@@ -1100,7 +1116,7 @@
           let content = parts.length > 1 ? `<b style="color:var(--gold); font-size:1.05rem;">${parts[0]}:</b>${parts.slice(1).join(':')}` : s;
           return `<li style="margin-bottom:1rem; padding-left:1.5rem; position:relative;"><span style="position:absolute; left:0; color:var(--gold);">✦</span> ${content}</li>`;
         }).join('')}</ul></div>` : ''}
-        ${data.mcqs ? `<div class="section-card" data-reveal>${getSecTitle('Multiple Choice Questions (MCQ)')}<div class="mcq-container">${data.mcqs.map((m, idx) => `<div class="mcq-card"><div class="mcq-num">${idx+1}</div><span class="mcq-question">${idx+1}. ${m.q}</span><div class="mcq-options">${m.options.map((opt, oIdx) => `<button class="option-btn" onclick="checkAnswer(this, ${oIdx}, ${m.a})"><span style="color:var(--gold); margin-right:10px; font-weight:700;">(${(['i','ii','iii','iv'])[oIdx]})</span> ${opt}</button>`).join('')}</div></div>`).join('')}</div></div>` : ''}
+        ${data.mcqs ? `<div class="section-card" data-reveal>${getSecTitle('Multiple Choice Questions (MCQ)')}<div class="mcq-container">${data.mcqs.map((m, idx) => `<div class="mcq-card"><div class="mcq-num">${idx+1}</div><span class="mcq-question">${idx+1}. ${m.q}</span><div class="mcq-options">${m.options.map((opt, oIdx) => `<div class="option-btn ${oIdx === m.a ? 'correct' : ''}" style="cursor:default;"><span style="color:var(--gold); margin-right:10px; font-weight:700;">(${(['i','ii','iii','iv'])[oIdx]})</span> ${opt}</div>`).join('')}</div></div>`).join('')}</div></div>` : ''}
         ${data.vshort ? `<div class="section-card" data-reveal>${getSecTitle('Very Short Questions')}${data.vshort.map((v, idx) => `<div class="vshort-item" style="margin-bottom:1.5rem;"><p style="color:var(--text-main); font-weight:600; margin-bottom:0.5rem;">Q${idx+1}. ${v.q}</p><p style="color:var(--gold); border-left:2px solid var(--gold); padding-left:1rem;">A: ${v.a}</p></div>`).join('')}</div>` : ''}
         ${data.short ? `<div class="section-card" data-reveal>${getSecTitle('Short Questions')}${data.short.map((s, idx) => `<div class="short-item" style="margin-bottom:1.8rem;"><p style="color:var(--text-main); font-weight:700; margin-bottom:0.8rem;">Q${idx+1}. ${s.q}</p><p style="color:var(--text-dim); line-height:1.7;">A: ${s.a}</p></div>`).join('')}</div>` : ''}
         ${data.differences ? `<div class="section-card" data-reveal>${getSecTitle('Key Differences')}${data.differences.map((diff, idx) => `<div class="diff-table-container" style="margin-bottom:2.5rem;"><h3 style="color:var(--gold); margin-bottom:1rem; font-size:1.1rem;">${idx+1}. ${diff.title}</h3><div style="overflow-x:auto;"><table><thead><tr>${diff.headers.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${diff.rows.map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`).join('')}</tbody></table></div></div>`).join('')}</div>` : ''}
@@ -1191,6 +1207,7 @@
     };
 
     window.onload = () => { renderUnitGrid(); };
+    document.addEventListener('contextmenu', event => event.preventDefault()); // Prevent right click
   </script>
 </body>
 </html>
